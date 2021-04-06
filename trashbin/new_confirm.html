@@ -1,0 +1,16 @@
+<form action="/uusiresepti" method="POST">
+<h2>Reseptin nimi:</h2>
+{{ nimi }}
+<p>
+<h3>Ainekset:</h3>
+<ul>
+{% for aines in ainekset %}
+<li> {{ aines[0] }}  -  {{ aines[2] }} kpl  -  Yhteensä: {{ aines[1]*aines[2] }}€, ({{ aines[1] }}€/kpl) 
+{% endfor %}
+</ul>
+<p>
+<h3>Ohjeet:</h3>
+{{ ohjeet }}
+<p>
+<input type="submit" value="Tallenna">
+</form>

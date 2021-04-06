@@ -1,0 +1,14 @@
+<form action="/uusiresepti" method="POST">
+<h2>Reseptin nimi: </h2>
+<textarea name="nimi" rows="1" cols="40"></textarea> <br>
+<p>
+<h3>Valitse ainekset:  </h3>
+{% for i in ingred %}
+<input type="number" id="{{ i[0] }}" name="maara{{ i[0] }}" min="0" max="10" step="1" value="0"> {{ i[1] }},    {{ i[2] }}€/kpl <br>
+{% endfor %}
+<p>
+<h3>Ohjeet reseptin tekoon: </h3>
+<textarea name="ohjeet" rows="3" cols="40"></textarea> <br>
+<p>
+<input type="submit" value="Tallenna">
+</form>
