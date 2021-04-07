@@ -12,7 +12,7 @@ INSERT INTO Aineet (nimi, hinta) VALUES ('Ruokakerma (2 dl)', 0.40);
 CREATE TABLE Ohjeet (id SERIAL PRIMARY KEY, resepti_id INTEGER, aines_id INTEGER, maara INTEGER);
 INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (1, 1, 1);
 INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (1, 2, 1);
-INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (2, 2, 6);
+INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (2, 3, 6);
 INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (2, 4, 1);
 
 
