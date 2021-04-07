@@ -36,8 +36,9 @@ def resepti(id):
 
 @app.route("/deleterecipe/<int:id>")
 def deleterecipe(id):
-    db.session.execute("DELETE FROM Reseptit WHERE id=:id", {id:id})
-    db.session.execute("DELETE FROM Ohjeet WHERE resepti_id=:id", {id:id})
+    db.session.execute("DELETE FROM Reseptit WHERE id=:id", {"id":id})
+    db.session.execute("DELETE FROM Ohjeet WHERE resepti_id=:id", {"id":id})
+    db.session.commit()
     return redirect("/")
 
 #Uusi resepti
