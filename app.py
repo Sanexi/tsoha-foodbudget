@@ -34,6 +34,12 @@ def resepti(id):
     yhteishinta = db.session.execute("SELECT SUM(A.hinta*O.maara) FROM Aineet A, Ohjeet O WHERE O.resepti_id=:id AND A.id=O.aines_id", {"id":id}).fetchone()[0]
     return render_template("recipes.html", id=id, nimi_ohje_paivays=nimi_ohje_paivays, aines_hinta_maara=aines_hinta_maara, yhteishinta=yhteishinta)
 
+@app.route("/deleterecipe/<int:id>")
+def deleterecipe(id):
+    db.session.execute("DELETE FROM Reseptit WHERE id=:id", {id:id})
+    db.session.execute("DELETE FROM Ohjeet WHERE resepti_id=:id", {id:id})
+    return redirect("/")
+
 #Uusi resepti
 @app.route("/uusi")
 def uusi():
