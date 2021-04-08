@@ -46,7 +46,7 @@ def send():
     ohjeet = request.form["ohjeet"]
     maarat = []
     luku = recipes.aineiden_maara()
-    for i in range(1, luku):
+    for i in range(1, luku+1):
         maarat.append(int(request.form[f"maara{i}"]))
     recipes.lisaa_resepti(nimi, ohjeet, maarat)
     return redirect("/")

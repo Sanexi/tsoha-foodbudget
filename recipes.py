@@ -49,7 +49,7 @@ def lisaa_resepti(nimi, ohjeet, maarat):
     aineet = aineiden_maara()
     sql2 = "INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (:resepti_id, :aines_id, :maara)"
     resepti_id = db.session.execute("SELECT id FROM Reseptit WHERE nimi=:nimi", {"nimi":nimi}).fetchone()[0]
-    for i in range(1, aineet):
+    for i in range(1, aineet+1):
         luku = maarat[i-1]
         if luku >= 1:
             db.session.execute(sql2, {"resepti_id":resepti_id, "aines_id":i, "maara":luku})
