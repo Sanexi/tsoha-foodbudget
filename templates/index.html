@@ -1,11 +1,22 @@
 <title>Etusivu</title>
 <h1>Etusivu</h1>
 <b>Tervetuloa!</b>
-<form action="/form" method="POST">
-<br>
-<input type="submit" value="Kirjaudu sisään">
-</form>
 
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/kirjaudu_ulos">Kirjaudu ulos</a>
+{% else %}
+<form action="/kirjautuminen" method="POST">
+<p>Tunnus:<br>
+<input type="text" name="username"></p>
+<p>Salasana:<br>
+<input type="password" name="password"></p>
+<input type="submit" value="Kirjaudu">
+</form>
+<button href="/rekisterointi">Rekisteröidy</button>
+{% endif %}
+<br>
+<p>
 Reseptiesi määrä: {{ count }}
 <hr>
 {% for recipe in recipes %}

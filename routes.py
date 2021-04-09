@@ -1,8 +1,12 @@
 from app import app
 import recipes
-from flask import redirect, render_template, request
+import users
+from flask import redirect, render_template, request, session
 from db import db
+from os import getenv
 
+
+app.secret_key = getenv("SECRET_KEY")
 
 #Etusivu
 @app.route("/")
@@ -12,13 +16,31 @@ def index():
     return render_template("index.html", count=count, recipes=tiedot)
 
 #Kirjautuminen
-@app.route("/form", methods=["POST"])
-def form():
-    return render_template("form.html")
+@app.route("/rekisterointi")
+def rekisterointi():
+    return render_template("rekisterointi.html")
 
-@app.route("/result", methods=["POST"])
-def result():
-    return render_template("result.html",name=request.form["name"])
+@app.route("/lisaakayttaja", methods=["POST"])
+def lisaakayttaja():
+    username = request.form["username"]
+    password = request.form["password"]
+    users.uusi_kayttaja(username, password)
+    session["username"] = username
+    return redirect("/")
+
+@app.route("/kirjautuminen", methods=["POST"])
+def kirjautuminen():
+    username = request.form["username"]
+    password = request.form["password"]
+    if users.vanha_kayttaja(username, password):
+        session["username"] = username
+    return redirect("/")
+
+@app.route("/kirjaudu_ulos")
+def kirjaudu_ulos():
+    del session["username"]
+    return redirect("/")
+
 
 #Näytä reseptit
 @app.route("/resepti/<int:id>")

@@ -15,5 +15,6 @@ INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (1, 2, 1);
 INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (2, 3, 6);
 INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (2, 4, 1);
 
+CREATE TABLE Kayttajat (id SERIAL PRIMARY KEY, username TEXT UNIQUE, password TEXT, role TEXT DEFAULT 'user');
 
 
