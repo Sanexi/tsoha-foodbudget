@@ -16,6 +16,4 @@ Luotu: {{ nimi_ohje_paivays[0][2].strftime("%d.%m.%Y") }}
 <h3>Hinta yhteensä: {{ yhteishinta }}€</h3>
 
 <a href="/">Takaisin</a> 
-{% if session.username %}
 <a href="/deleterecipe/{{ id }}">Poista resepti</a>
-{% endif %}
