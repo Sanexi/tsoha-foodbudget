@@ -55,12 +55,15 @@ def aineet_id():
 def lisaa_resepti(nimi, ohjeet, maarat):
     sql1 = "INSERT INTO Reseptit (nimi, ohjeet) VALUES (:nimi, :ohjeet)"
     db.session.execute(sql1, {"nimi":nimi, "ohjeet":ohjeet})
-
+    print(db.session.execute("SELECT * from Reseptit").fetchall())
     luku = aineet_id()
     sql2 = "INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (:resepti_id, :aines_id, :maara)"
     resepti_id = db.session.execute("SELECT id FROM Reseptit WHERE nimi=:nimi", {"nimi":nimi}).fetchone()[0]
+    print(maarat)
     for i in luku:
-        maara = maarat.pop(0)
+        print(i)
+        maara = maarat[i]
+        print(maara)
         if maara >= 1:
             db.session.execute(sql2, {"resepti_id":resepti_id, "aines_id":i, "maara":maara})
     db.session.commit()

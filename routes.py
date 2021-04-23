@@ -1,7 +1,7 @@
 from app import app
 import recipes
 import users
-from flask import redirect, render_template, request, session
+from flask import redirect, render_template, request
 from os import getenv
 
 
@@ -23,21 +23,23 @@ def rekisterointi():
 def lisaakayttaja():
     username = request.form["username"]
     password = request.form["password"]
-    users.uusi_kayttaja(username, password)
-    session["username"] = username
-    return redirect("/")
+    if users.uusi_kayttaja(username, password):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Rekisteröinti ei onnistunut. Käyttäjänimi saattaa olla valittu")
 
 @app.route("/kirjautuminen", methods=["POST"])
 def kirjautuminen():
     username = request.form["username"]
     password = request.form["password"]
     if users.vanha_kayttaja(username, password):
-        session["username"] = username
-    return redirect("/")
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Väärä käyttäjätunnus tai salasana")
 
 @app.route("/kirjaudu_ulos")
 def kirjaudu_ulos():
-    del session["username"]
+    users.kirjaudu_ulos()
     return redirect("/")
 
 
@@ -65,10 +67,11 @@ def uusi():
 def lisaaresepti():
     nimi = request.form["nimi"]
     ohjeet = request.form["ohjeet"]
-    maarat = []
+    maarat = {}
     luku = recipes.aineet_id()
     for i in luku:
-        maarat.append(int(request.form[f"maara{i}"]))
+        maarat[i] = int(request.form[f"maara{i}"])
+    print(maarat)
     recipes.lisaa_resepti(nimi, ohjeet, maarat)
     return redirect("/")
 #ONGELMA
