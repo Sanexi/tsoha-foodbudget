@@ -38,23 +38,37 @@ def nayta_aineet():
     ingred = result.fetchall()
     return ingred
 
+def poista_aines(id):
+    db.session.execute("DELETE FROM Aineet WHERE id=:id", {"id":id})
+    db.session.execute("DELETE FROM Ohjeet WHERE aines_id=:id", {"id":id})
+    db.session.commit()
+
 def aineiden_maara():
     aineet = db.session.execute("SELECT COUNT(*) FROM Aineet").fetchone()[0]
     return aineet
 
+def aineet_id():
+    palautus = db.session.execute("SELECT id FROM Aineet").fetchall()
+    return palautus
+
+#ONGELMA
 def lisaa_resepti(nimi, ohjeet, maarat):
     sql1 = "INSERT INTO Reseptit (nimi, ohjeet) VALUES (:nimi, :ohjeet)"
     db.session.execute(sql1, {"nimi":nimi, "ohjeet":ohjeet})
 
-    aineet = aineiden_maara()
+    luku = aineet_id()
     sql2 = "INSERT INTO Ohjeet (resepti_id, aines_id, maara) VALUES (:resepti_id, :aines_id, :maara)"
     resepti_id = db.session.execute("SELECT id FROM Reseptit WHERE nimi=:nimi", {"nimi":nimi}).fetchone()[0]
-    for i in range(1, aineet+1):
-        luku = maarat[i-1]
-        if luku >= 1:
-            db.session.execute(sql2, {"resepti_id":resepti_id, "aines_id":i, "maara":luku})
+    for i in luku:
+        maara = maarat.pop(0)
+        if maara >= 1:
+            db.session.execute(sql2, {"resepti_id":resepti_id, "aines_id":i, "maara":maara})
     db.session.commit()
+#ONGELMA
 
 
-
-
+#UUSI AINES
+def lisaa_aines(nimimaara, hinta):
+    sql1 = "INSERT INTO Aineet (nimi, hinta) VALUES (:nimimaara, :hinta)"
+    db.session.execute(sql1, {"nimimaara":nimimaara, "hinta":hinta})
+    db.session.commit()

@@ -2,7 +2,6 @@ from app import app
 import recipes
 import users
 from flask import redirect, render_template, request, session
-from db import db
 from os import getenv
 
 
@@ -56,19 +55,38 @@ def deleterecipe(id):
     return redirect("/")
 
 #Uusi resepti
-@app.route("/uusi")
+@app.route("/uusiresepti")
 def uusi():
     ingred = recipes.nayta_aineet()
-    return render_template("new.html", ingred=ingred)
+    return render_template("newrecipe.html", ingred=ingred)
 
-
-@app.route("/uusiresepti", methods=["POST"])
-def send():
+#ONGELMA
+@app.route("/lisaaresepti", methods=["POST"])
+def lisaaresepti():
     nimi = request.form["nimi"]
     ohjeet = request.form["ohjeet"]
     maarat = []
-    luku = recipes.aineiden_maara()
-    for i in range(1, luku+1):
+    luku = recipes.aineet_id()
+    for i in luku:
         maarat.append(int(request.form[f"maara{i}"]))
     recipes.lisaa_resepti(nimi, ohjeet, maarat)
     return redirect("/")
+#ONGELMA
+
+@app.route("/deleteingred/<int:id>")
+def deleteingred(id):
+    recipes.poista_aines(id)
+    return redirect("/uusiresepti")
+
+#Uusi aines
+@app.route("/uusiaines")
+def uusiaines():
+    ingred = recipes.nayta_aineet()
+    return render_template("newingred.html", ingred=ingred)
+
+@app.route("/lisaaaines", methods=["POST"])
+def lisaaaines():
+    nimimaara = request.form["nimimaara"]
+    hinta = request.form["hinta"]
+    recipes.lisaa_aines(nimimaara, hinta)
+    return redirect("/uusiresepti")
