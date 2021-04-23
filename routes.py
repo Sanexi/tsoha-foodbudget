@@ -26,7 +26,7 @@ def lisaakayttaja():
     if users.uusi_kayttaja(username, password):
         return redirect("/")
     else:
-        return render_template("error.html", message="Rekisteröinti ei onnistunut. Käyttäjänimi saattaa olla valittu")
+        return render_template("error.html", message="Rekisteröinti ei onnistunut")
 
 @app.route("/kirjautuminen", methods=["POST"])
 def kirjautuminen():
@@ -62,19 +62,31 @@ def uusi():
     ingred = recipes.nayta_aineet()
     return render_template("newrecipe.html", ingred=ingred)
 
-#ONGELMA
 @app.route("/lisaaresepti", methods=["POST"])
 def lisaaresepti():
     nimi = request.form["nimi"]
     ohjeet = request.form["ohjeet"]
+
+    if len(nimi) > 50:
+        return render_template("error.html", message="Reseptin nimi on liian pitkä")
+    if len(nimi) < 3:
+        return render_template("error.html", message="Reseptin nimi on liian lyhyt")
+    if len(ohjeet) > 1000:
+        return render_template("error.html", message="Reseptin ohjeet ovat liian pitkät")
+
     maarat = {}
+    ei_tyhjia = False
     luku = recipes.aineet_id()
     for i in luku:
         maarat[i] = int(request.form[f"maara{i}"])
-    print(maarat)
+        if maarat[i] > 0:
+            ei_tyhjia = True
+
+    if ei_tyhjia == False:
+        return render_template("error.html", message="Reseptillä ei yhtään aineksia")
+
     recipes.lisaa_resepti(nimi, ohjeet, maarat)
     return redirect("/")
-#ONGELMA
 
 @app.route("/deleteingred/<int:id>")
 def deleteingred(id):
@@ -91,5 +103,15 @@ def uusiaines():
 def lisaaaines():
     nimimaara = request.form["nimimaara"]
     hinta = request.form["hinta"]
+
+    if len(nimimaara) > 50:
+        return render_template("error.html", message="Aineksen nimi on liian pitkä")
+    if len(nimimaara) < 3:
+        return render_template("error.html", message="Aineksen nimi on liian lyhyt. Muista ilmoittaa myös aineksen määrä")
+    if "(" not in nimimaara or ")" not in nimimaara:
+        return render_template("error.html", message="Anna aineksen määrä sulkeissa. Esim. jauheliha (400g)")
+    if "€" in hinta or "," in hinta or " " in hinta or len(hinta) > 10 or "." not in hinta or len(hinta) < 2:
+        return render_template("error.html", message="Hinta väärin. Anna hinta muodossa EUROT.SENTIT (Ei euromerkkiä). Esim. 2.50 tai 0.85")
+
     recipes.lisaa_aines(nimimaara, hinta)
     return redirect("/uusiresepti")
