@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 <h2>{{ nimi_ohje_paivays[0][0] }}</h2>
 Luotu: {{ nimi_ohje_paivays[0][2].strftime("%d.%m.%Y") }}
 <p>
@@ -9,11 +12,16 @@ Luotu: {{ nimi_ohje_paivays[0][2].strftime("%d.%m.%Y") }}
 </ul>
 <p>
 <h3>Ohjeet:</h3>
-{{ nimi_ohje_paivays[0][1] }}
-<p>
-<p>
-<p>
+{{ nimi_ohje_paivays[0][1].replace("„", "ä") }}
+<br>
 <h3>Hinta yhteensä: {{ yhteishinta }}€</h3>
-
-<a href="/">Takaisin</a> 
+<br>
+Reseptin tekijä: {{ nimi_ohje_paivays[0][3] }}<br>
+<br>
+<a href="/">Takaisin</a> <br>
+<br>
+{% if session.username %}
 <a href="/deleterecipe/{{ id }}">Poista resepti</a>
+{% endif %}
+
+{% endblock %}

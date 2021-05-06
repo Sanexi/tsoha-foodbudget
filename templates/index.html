@@ -1,7 +1,9 @@
-<title>Etusivu</title>
-<h1>Etusivu</h1>
-<b>Tervetuloa!</b>
+{% extends "layout.html" %}
 
+{% block content %}
+<h2>Etusivu</h2>
+<b>Tervetuloa!</b>
+<br>
 {% if session.username %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
 <a href="/kirjaudu_ulos">Kirjaudu ulos</a>
@@ -13,19 +15,26 @@
 <input type="password" name="password"></p>
 <input type="submit" value="Kirjaudu">
 </form>
+<br>
 <form action="/rekisterointi">
 <input type="submit" value="Rekisteröidy">
 </form>
 {% endif %}
-<br>
+
+<hr>
 <p>
-Reseptiesi määrä: {{ count }}
+Reseptien määrä: <b>{{ count }}</b>
 <hr>
 {% for recipe in recipes %}
 Nimi: {{ recipe[1].replace("„", "ä") }} <br>
 Hinta: {{ recipe[2] }} € <br>
+Tekijä: {{ recipe[4] }}  <br>
 Luotu: {{ recipe[3].strftime("%d.%m.%Y") }} <br>
 <a href="/resepti/{{ recipe[0] }}">Näytä resepti</a>
 <hr>
 {% endfor %}
+{% if session.username %}
 <a href="/uusiresepti">Lisää resepti</a>
+{% endif %}
+
+{% endblock %}

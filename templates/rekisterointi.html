@@ -1,4 +1,6 @@
-Luo uusi tunnus:
+{% extends "layout.html" %}
+{% block content %}
+<h2>Luo uusi tunnus:<h2>
 <br>
 <form action="/lisaakayttaja" method="POST">
 <p>Tunnus:<br>
@@ -10,4 +12,4 @@ Luo uusi tunnus:
 <form action="/">
 <input type="submit" value="Peruuta">
 </form>
-
+{% endblock %}

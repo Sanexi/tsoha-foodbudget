@@ -1,6 +1,7 @@
 from db import db
 from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
+import os
 
 def uusi_kayttaja(username, password):
     hash_value = generate_password_hash(password)
@@ -22,6 +23,7 @@ def vanha_kayttaja(username, password):
         hash_value = user[0]
         if check_password_hash(hash_value,password):
             session["username"] = user[1]
+            session["csrf_token"] = os.urandom(16).hex()
             return True
         else:
             return False

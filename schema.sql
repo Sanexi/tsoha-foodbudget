@@ -1,4 +1,4 @@
-CREATE TABLE Reseptit (id SERIAL PRIMARY KEY, nimi TEXT, ohjeet TEXT, paivays TIMESTAMPTZ DEFAULT Now());
+CREATE TABLE Reseptit (id SERIAL PRIMARY KEY, nimi TEXT, ohjeet TEXT, kayttaja TEXT, paivays TIMESTAMPTZ DEFAULT Now());
 
 CREATE TABLE Aineet (id SERIAL PRIMARY KEY, nimi TEXT, hinta DECIMAL);
 

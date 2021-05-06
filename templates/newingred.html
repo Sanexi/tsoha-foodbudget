@@ -1,4 +1,8 @@
-<form action="/lisaaaines" method="POST">
+{% extends "layout.html" %}
+{% block content %}
+
+{% if session.username %}
+<form action="/lisaaaines" method="POST" onsubmit="return check(this)">
 <h2>Lisää ruoka-aine</h2>
 <p>
 <h3>Ruoka-aineen nimi ja määrä: </h3>
@@ -12,7 +16,28 @@ Muodossa: 1.25 tai 0.80 (1,25€ ja 0,80€)<br>
 Ruoka-aineiden hintoja voit etsiä <a href="https://www.foodie.fi/">Foodie.fi:stä</a>
 <p>
 <input type="submit" value="Tallenna">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <form action="/uusiresepti">
 <input type="submit" value="Peruuta" />
 </form>
+
+<script>
+function check(form) {
+    if (form.nimimaara.value.length > 50) {
+        alert("Aineksen nimi on liian pitkä");
+        return false;
+    }
+    if (form.nimimaara.value.length < 3) {
+        alert("Aineksen nimi on liian lyhyt. Muista ilmoittaa myös aineksen määrä");
+        return false;
+    }
+
+    return true;
+}
+</script>
+{% else %}
+<script>alert("No access")</script>
+{% endif %}
+
+{% endblock %}

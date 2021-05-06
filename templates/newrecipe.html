@@ -1,4 +1,8 @@
-<form action="/lisaaresepti" method="POST">
+{% extends "layout.html" %}
+{% block content %}
+
+{% if session.username %}
+<form action="/lisaaresepti" method="POST" onsubmit="return check(this)">
 <h2>Lisää resepti</h2>
 <p>
 <h3>Reseptin nimi: </h3>
@@ -6,9 +10,15 @@
 <p>
 <h3>Valitse ainekset:  </h3>
 {% for i in ingred %}
-<input type="number" id="{{ i[0] }}" name="maara{{ i[0] }}" min="0" max="10" step="1" value="0"> {{ i[1] }},    {{ i[2] }}€/kpl |
-<a href="/deleteingred/{{ i[0] }}">Poista</a>  <br>
+<span style="float:left;">
+  <input type="number" id="{{ i[0] }}" name="maara{{ i[0] }}" min="0" max="10" step="1" value="0"> {{ i[1] }},    {{ i[2] }}€/kpl
+</span>
+<span style="float:right;">
+  <a href="/deleteingred/{{ i[0] }}">Poista</a>
+</span><br>
+<br>
 {% endfor %}
+<br>
 <p>
 <a href="/uusiaines">Lisää aines</a>
 <p>
@@ -16,7 +26,31 @@
 <textarea name="ohjeet" rows="3" cols="40"></textarea> <br>
 <p>
 <input type="submit" value="Tallenna">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <form action="/">
 <input type="submit" value="Peruuta" />
 </form>
+
+
+<script>
+function check(form) {
+    if (form.nimi.value.length > 50) {
+        alert("Reseptin nimi on liian pitkä");
+        return false;
+    }
+    if (form.nimi.value.length < 3) {
+        alert("Reseptin nimi on liian lyhyt");
+        return false;
+    }
+    if (form.ohjeet.value.length > 1000) {
+        alert("Reseptin ohjeet ovat liian pitkät");
+        return false;
+    }
+    return true;
+}
+</script>
+{% else %}
+<script>alert("No access")</script>
+{% endif %}
+{% endblock %}

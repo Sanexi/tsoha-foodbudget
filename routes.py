@@ -1,7 +1,7 @@
 from app import app
 import recipes
 import users
-from flask import redirect, render_template, request
+from flask import redirect, render_template, request, session, abort
 from os import getenv
 
 
@@ -64,6 +64,9 @@ def uusi():
 
 @app.route("/lisaaresepti", methods=["POST"])
 def lisaaresepti():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    
     nimi = request.form["nimi"]
     ohjeet = request.form["ohjeet"]
 
@@ -85,7 +88,9 @@ def lisaaresepti():
     if ei_tyhjia == False:
         return render_template("error.html", message="Reseptillä ei yhtään aineksia")
 
-    recipes.lisaa_resepti(nimi, ohjeet, maarat)
+    kayttaja = session["username"]
+
+    recipes.lisaa_resepti(nimi, ohjeet, maarat, kayttaja)
     return redirect("/")
 
 @app.route("/deleteingred/<int:id>")
@@ -101,6 +106,9 @@ def uusiaines():
 
 @app.route("/lisaaaines", methods=["POST"])
 def lisaaaines():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    
     nimimaara = request.form["nimimaara"]
     hinta = request.form["hinta"]
 
