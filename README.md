@@ -1,16 +1,38 @@
-# FoodBudget
+# tsoha-FoodBudget
 
-Sovelluksen auttaa ruuan budjetoinnissa ja antaa käyttäjien luoda reseptejä. Sovelluksessa on valmiita ruoka-aineta sekä reseptejä sekä niiden hinnat ja määrät. Sovelluksessa on käyttäjiä, jotka voivat luoda itselleen omia reseptejä ja lisätä ruoka-aineita. Ylläpitäjät voivat lisätä käyttäjien ruoka-aineita ja reseptejä kaikkien nähtäväksi.
+Sovelluksen auttaa ruuan budjetoinnissa ja reseptien tekemisessä. Sovelluksesta näkee kaikki siellä olevat reseptit ja niiden hinnat helposti. Käyttäjät voivat lisätä näitä reseptejä, sekä ruoka-aineita, joista muut käyttäjät voivat tehdä omia reseptejään.
 
-Sovelluksen tulevat ominaisuudet:
+Sovellus on tehty Helsingin yliopiston Tietokantasovellus-ainetyöksi.
+
+
+## Sovelluksen ominaisuudet
+
+* Sovelluksessa kaikki näkevät reseptit, niiden hinnat, reseptin tekijän sekä reseptin luontiajan.
 
 * Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
-* Käyttäjä näkee yleiset reseptit ja ruoka-aineet, sekä näiden hinnat.
-* Käyttäjällä on omat reseptit ja ruoka-aineet, joita hän voi lisätä tarpeen tullen.
-* Ylläpitäjät voivat julkaista käyttäjien reseptejä ja ruoka-aineita.
-* Käyttäjät voivat arvostella reseptejä.
+
+* Käyttäjä voi luoda uusia reseptejä.
+
+* Käyttäjä voi luoda uusia ruoka-aineita.
+
+* Sovellus laskee käyttäjän reseptin hinnan automaattisesti.
+
+* Käyttäjä voi poistaa oman reseptinsä.
 
 
-Sovelluksen tila tällä hetkellä (25.4.2021):
-Sovellus on loppusuoralla. Reseptien luominen, aineksien lisääminen ja näiden poistaminen toimii. Myös suurin osa virheellisten syötteiden tarkastuksista on valmiit. Sovelluksen Heroku versiossa sisäänkirjautuminen ja käyttäjät eivät vielä toimi. Sovellukseen on tulossa vielä mahdollisesti parempi käyttöliittymä, käyttäjien omat reseptit ja ominaisuus arvioida reseptejä.
-Sovellusta pääsee testaamaan: https://tsoha-foodbudget.herokuapp.com/
+
+## Sovelluksen käyttö
+
+
+Sovellusta pääsee testaamaan Herokussa: https://tsoha-foodbudget.herokuapp.com/
+
+* Sovelluksen aloitusnäkymästä pääset kirjautumaan, sekä tarkastelemaan kaikkia mahdollisia reseptejä tarkemmin.
+
+* Kirjautuneena sinulle aukeaa pääsy luomaan uusia reseptejä.
+
+* Uusia reseptejä luodessasi voit lisätä myös tarvittaessa uusia aineosia, joiden hintoja voit etsiä esim. [Foodiesta](https://www.foodie.fi/)
+
+* Voit mahdollisesti myös poistaa omat luomasi reseptit
+
+
+<img src="aloitus.JPG" width="432" height="584">
