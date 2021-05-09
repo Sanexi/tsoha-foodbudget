@@ -96,7 +96,7 @@ def lisaaresepti():
     except:
         return render_template("error.html", message="Reseptin luonnissa virhe. Tarkista ettei reseptiä ole jo olemassa.") 
 
-@app.route("/deleteingred/<int:id>", methods=["POST"])
+@app.route("/deleteingred/<int:id>")
 def deleteingred(id):
     recipes.poista_aines(id)
     return redirect("/uusiresepti")

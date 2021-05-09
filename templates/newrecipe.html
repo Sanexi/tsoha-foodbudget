@@ -14,10 +14,7 @@
   <input type="number" id="{{ i[0] }}" name="maara{{ i[0] }}" min="0" max="10" step="1" value="0"> {{ i[1] }},    {{ i[2] }}€/kpl
 </span>
 <span style="float:right;">
-  <form action="/deleteingred/{{ i[0] }}" method="POST">
-  <input type="submit" value="Poista">
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-  </form>
+  <a href="/deleteingred/{{ i[0] }}">Poista</a>
 </span><br>
 <br>
 {% endfor %}
@@ -26,7 +23,7 @@
 <a href="/uusiaines">Lisää aines</a>
 <p>
 <h3>Ohjeet reseptin tekoon: </h3>
-<textarea name="ohjeet" rows="3" cols="40"></textarea> <br>
+<textarea name="ohjeet" rows="9" cols="90"></textarea> <br>
 <p>
 <input type="submit" value="Tallenna">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
