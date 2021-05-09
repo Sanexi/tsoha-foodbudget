@@ -51,7 +51,7 @@ def resepti(id):
     yhteishinta = recipes.yhteishinta(id)
     return render_template("recipes.html", id=id, nimi_ohje_paivays=nimi_ohje_paivays, aines_hinta_maara=aines_hinta_maara, yhteishinta=yhteishinta)
 
-@app.route("/deleterecipe/<int:id>")
+@app.route("/deleterecipe/<int:id>", methods=["POST"])
 def deleterecipe(id):
     recipes.poista_resepti(id)
     return redirect("/")
@@ -90,10 +90,13 @@ def lisaaresepti():
 
     kayttaja = session["username"]
 
-    recipes.lisaa_resepti(nimi, ohjeet, maarat, kayttaja)
-    return redirect("/")
+    try:
+        recipes.lisaa_resepti(nimi, ohjeet, maarat, kayttaja)
+        return redirect("/")
+    except:
+        return render_template("error.html", message="Reseptin luonnissa virhe. Tarkista ettei reseptiä ole jo olemassa.") 
 
-@app.route("/deleteingred/<int:id>")
+@app.route("/deleteingred/<int:id>", methods=["POST"])
 def deleteingred(id):
     recipes.poista_aines(id)
     return redirect("/uusiresepti")

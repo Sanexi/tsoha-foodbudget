@@ -14,7 +14,10 @@
   <input type="number" id="{{ i[0] }}" name="maara{{ i[0] }}" min="0" max="10" step="1" value="0"> {{ i[1] }},    {{ i[2] }}€/kpl
 </span>
 <span style="float:right;">
-  <a href="/deleteingred/{{ i[0] }}">Poista</a>
+  <form action="/deleteingred/{{ i[0] }}" method="POST">
+  <input type="submit" value="Poista">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  </form>
 </span><br>
 <br>
 {% endfor %}

@@ -5,15 +5,17 @@ body {
     font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
-form {
-    padding: .5em;
-    border-radius: .5em;
+li {
+  margin: 10px 0;
 }
 
-a {
-    border-style: solid;
-    border-width : 1px 1px 1px 1px;
-    text-decoration : none;
-    padding : 4px;
-    border-color : #000000
-  }
+input[type=submit] {
+    font-size: 120%;
+}
+
+.header {
+    background: #F9FFAB;
+    font-weight: bold;
+    padding: 2em 1em;
+    font-size: 2em;
+}

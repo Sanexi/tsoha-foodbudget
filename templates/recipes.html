@@ -7,7 +7,13 @@ Luotu: {{ nimi_ohje_paivays[0][2].strftime("%d.%m.%Y") }}
 <h3>Ainekset:</h3>
 <ul>
 {% for aines in aines_hinta_maara %}
-<li> {{ aines[2] }} x {{ aines[0] }}  -  (Yhteensä: {{ aines[1]*aines[2] }}€  -  {{ aines[1] }}€/kpl)
+<li>
+  <span style="float:left;">
+    {{ aines[2] }} x {{ aines[0] }}
+  </span>
+  <span style="float:right;">
+    Yhteensä: {{ aines[1]*aines[2] }}€  -  {{ aines[1] }}€/kpl
+  </span>
 {% endfor %}
 </ul>
 <p>
@@ -18,10 +24,16 @@ Luotu: {{ nimi_ohje_paivays[0][2].strftime("%d.%m.%Y") }}
 <br>
 Reseptin tekijä: {{ nimi_ohje_paivays[0][3] }}<br>
 <br>
-<a href="/">Takaisin</a> <br>
 <br>
-{% if session.username %}
-<a href="/deleterecipe/{{ id }}">Poista resepti</a>
+{% if session.username == nimi_ohje_paivays[0][3] %}
+<form action="/deleterecipe/{{ id }}" method="POST">
+<input type="submit" value="Poista resepti">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<br>
 {% endif %}
+<form action="/">
+<input type="submit" value="Takaisin" />
+</form>
 
 {% endblock %}
